@@ -56,7 +56,7 @@ if __name__ == '__main__':
         ]
 
         print("--- 调用LLM ---")
-        responseText = llmClient.think(exampleMessages)
+        responseText = llm.think(exampleMessages)
         if responseText:
             print("\n\n--- 完整模型响应 ---")
             print(responseText)
