@@ -33,7 +33,33 @@ class  LLM:
                 stream=True
             )
 
-            content = []
+            all_content = []
             for chunk in response:
-                
+                if not chunk.choices:
+                    continue
+                content = chunk.choices[0].delta.content or ''
+                all_content.append(content)
 
+                return "".join(all_content)
+
+        except Exception as e:
+            print(f"调用LLM发生错误:{e}")
+            return None
+        
+if __name__ == '__main__':
+    try:
+        llm = LLM()
+
+        exampleMessages = [
+            {"role": "system", "content": "You are a helpful assistant that writes Python code."},
+            {"role": "user", "content": "写一个快速排序算法"}
+        ]
+
+        print("--- 调用LLM ---")
+        responseText = llmClient.think(exampleMessages)
+        if responseText:
+            print("\n\n--- 完整模型响应 ---")
+            print(responseText)
+
+    except ValueError as e:
+        print(e)
